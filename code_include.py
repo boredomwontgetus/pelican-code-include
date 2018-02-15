@@ -17,6 +17,7 @@ class CodeInclude(Directive):
     final_argument_whitespace = True
     option_spec = {'lexer': directives.unchanged,
                    'encoding': directives.encoding,
+                   'linenos': directives.unchanged,
                    'tab-width': int,
                    'start-line': int,
                    'end-line': int}
@@ -95,10 +96,11 @@ class CodeInclude(Directive):
 
         # default lexer to 'text'
         lexer = self.options.get('lexer', 'text')
+        linenos = self.options.get('linenos', 'none')
 
         codeblock = Pygments(self.name,
                              [lexer],  # arguments
-                             {},  # no options for this directive
+                             { 'linenos': linenos },  # no options for this directive
                              include_lines,  # content
                              self.lineno,
                              self.content_offset,
